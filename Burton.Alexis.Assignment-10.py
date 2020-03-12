@@ -1,34 +1,23 @@
-#Alexis Burton Assignment8-Data Visualization
-#02/27/2020
-#Using matplotlib, numpy, json and pandas to access a json file with price information for 8 stock symbols
+#Alexis Burton Assignment10-Data Visualization Part Two
+#03/12/2020
+#Using matplotlib, numpy, json and pandas to 
+# 1)access a json file with price information for 8 stock symbols
+# 2)Get average-mean of the closing stock price for each symbol
+# 3)show a pie chart graph of the value distribution of different stocks in the portfolio
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import json
-from datetime import datetime
-from matplotlib import dates
-import matplotlib as mpl
-stock_Prices = []
-stock_Dates = []
 filePath ="AllStocks.json"
-stock_Symbols = []
-stock_Symbols_Unique = []
 
-#Open json file
-with open(filePath) as f: 
-    dataSet = json.load(f)
+
+
 
 #Using Pandas to read the json files into a data frame
 df = pd.read_json (r'AllStocks.json')
-ax = plt.gca()
-#Adding y-axis label
-plt.ylabel('Price')
 
-#Plotting close price grouped by stock symbol
-for name, group in df.groupby('Symbol'):
-    #plotting the date to the x-axis and Close to the y-axis
-    group.plot(x='Date',y='Close', ax=ax, label=name)
-#Showing the chart
+#Average Close price by stock
+av_column = df.groupby('Symbol').mean()
+av_column.plot.pie(y='Close', subplots=True,  figsize=(5,5), autopct ='%1.1f%%', fontsize=10, title=('Portfolio Stock Valuation Distribution'))
 plt.show() 
 
